@@ -28,6 +28,7 @@
 			</tr>
 		</table>
 		<script>
+			var sostoyaniya = new Array();
 			function feminism(count, k, vhods) {
 				if(k==-1){
 					count[0]=vhods[0].length + 1;
@@ -78,11 +79,13 @@
 						varInput+=soses[k][countsos[k]];
 					}
 					feminism(countsos, countsos.length - 1, soses);
+					sostoyaniya.push(varInput);
 					$('#head').append("<td>"+ varInput +"</td>");
 					varInput = "";
 					yoba++;
 				}
 
+				var countervhod = 0;
 				while(countvhod[0] <= vhods[0].length) {
 					var varInput="";
 					for (var k = 0; k < countvhod.length; k++)
@@ -90,9 +93,13 @@
 						varInput+=vhods[k][countvhod[k]];
 					}
 					feminism(countvhod, countvhod.length - 1, vhods);
-					$('#graphics').append("<tr><td>"+ varInput +"</td></tr>");
+					$('#graphics').append("<tr id='trvhod"+countervhod+"'><td>"+ varInput +"</td></tr>");
+					for (var i = sostoyaniya.length - 1; i >= 0; i--) {
+						$('#trvhod'+countervhod).append("<td>"+ sostoyaniya[Math.floor(Math.random()*100) % sostoyaniya.length] +"</td>");
+					}
 					varInput = "";
 					//yoba++;
+					countervhod++;
 				}
 			}
 			function addVhod(){
