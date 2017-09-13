@@ -1,0 +1,112 @@
+﻿<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<div id="vhodlist">
+			<p>Входы</p>
+			<button onclick="addVhod()">Добавить вход</button>
+			<input id="vhod1" value = "qwe" />
+		</div>
+		<div id="soslist">
+			<p>Состояния</p>
+			<button onclick="addSos()">Добавить состояние</button>
+			<input id="sos1" value = "123" />
+		</div>
+		<div id="vihodlist">
+			<p>Выходы</p>
+			<button onclick="addVihod()">Добавить выход</button>
+			<input id="vihod1" value = "фыв" />
+		</div>
+		<br />
+		<button onclick="generateValues()">ПОСЧИТАЙ ПОСЧИТАЙ ПОСЧИТАЙ ДО СТА</button>
+
+		<table id="graphics" border=1>
+			<tr id="head">
+				<th>Входы\Состояния</th>
+			</tr>
+		</table>
+		<script>
+			function feminism(count, k, vhods) {
+				if(k==-1){
+					count[0]=vhods[0].length + 1;
+					return count;
+				}
+				if(count[k] >= vhods[k].length){
+					count[k] = 0;
+					feminism(count, k-1, vhods);
+				} else {
+					count[k]++;
+					if(count[k] >= vhods[k].length){
+						count[k] = 0;
+						feminism(count, k-1, vhods);
+					}
+					return count;
+				}
+			}
+			function generateValues() {
+				var yoba = 0;
+				$($("#graphics").find("tr")[0]).find("td").remove();
+				var vhodsInput = $("#vhodlist").find("input");
+				var sosInput = $("#soslist").find("input");
+				
+				var vhods = new Array();
+				vhodsInput.each(function(i, item){
+					vhods.push($(item).val());
+				});
+
+				var countvhod = new Array();
+				for(var i = 0; i < vhods.length; i++){
+					countvhod.push(0);
+				}
+
+				var soses = new Array();
+				sosInput.each(function(i, item){
+					soses.push($(item).val());
+				});
+
+				var countsos = new Array();
+				for(var i = 0; i < soses.length; i++){
+					countsos.push(0);
+				}
+
+				while(countsos[0] <= soses[0].length) {
+					var varInput="";
+					for (var k = 0; k < countsos.length; k++)
+					{
+						varInput+=soses[k][countsos[k]];
+					}
+					feminism(countsos, countsos.length - 1, soses);
+					$('#head').append("<td>"+ varInput +"</td>");
+					varInput = "";
+					yoba++;
+				}
+
+				while(countvhod[0] <= vhods[0].length) {
+					var varInput="";
+					for (var k = 0; k < countvhod.length; k++)
+					{
+						varInput+=vhods[k][countvhod[k]];
+					}
+					feminism(countvhod, countvhod.length - 1, vhods);
+					$('#graphics').append("<tr><td>"+ varInput +"</td></tr>");
+					varInput = "";
+					//yoba++;
+				}
+			}
+			function addVhod(){
+				var counter = $("#vhodlist").find("input").length+1;
+				$("#vhodlist").append("<input id=\"vhod"+counter+"\" />");
+			}
+			function addSos(){
+				var counter = $("#soslist").find("input").length+1;
+				$("#soslist").append("<input id=\"sos"+counter+"\" />");
+			}
+			function addVihod(){
+				var counter = $("#vihodlist").find("input").length+1;
+				$("#vihodlist").append("<input id=\"vihod"+counter+"\" />");
+			}
+		</script>
+	</body>
+</html>
