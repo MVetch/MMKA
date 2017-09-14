@@ -1,4 +1,4 @@
-﻿<html>
+<html>
 	<head>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
 		<meta charset="utf-8">
@@ -49,6 +49,8 @@
 			function generateValues() {
 				var yoba = 0;
 				$($("#graphics").find("tr")[0]).find("td").remove();
+				$("#graphics").find("tr:not(#head)").remove();
+				sostoyaniya = new Array();
 				var vhodsInput = $("#vhodlist").find("input");
 				var sosInput = $("#soslist").find("input");
 				
