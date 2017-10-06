@@ -34,6 +34,7 @@
 		</table>
 		<script>
 			var sostoyaniya = new Array();
+			var vihodi = new Array();
 			function feminism(count, k, vhods) {
 				if(k==-1){
 					count[0]=vhods[0].length + 1;
@@ -51,19 +52,23 @@
 					return count;
 				}
 			}
-			function generateValues() {//TODO: , , сделать вторую таблицу под выходы, ахахаха стой стой стой отстановись ааа блять нахуй. так. ахахажхэахэахаэахэхехэахэхеэхеахах сделать функцию, которая заменяет пробелы наподчеркивания при генерировании состтояний ну в принципе все.
+			function generateValues() {//TODO: сделать функцию, которая заменяет пробелы наподчеркивания при генерировании состтояний ну в принципе все.
 				var yoba = 0;
 				$($("#graphics").find("tr")[0]).find("td").remove();
 				$("#graphics").find("tr:not(#head)").remove();
+				$($("#graphics2").find("tr")[0]).find("td").remove();
+				$("#graphics2").find("tr:not(#head2)").remove();
 				sostoyaniya = new Array();
+				vihodi = new Array();
 				var vhodsInput = $("#vhodlist").find("input");
 				var vihodsInput = $("#vihodlist").find("input");
 				var sosInput = $("#soslist").find("input");
 				
 				var vhods = new Array();
 				vhodsInput.each(function(i, item){
-					if($(item).val()!="")
-						vhods.push($(item).val());
+					if($(item).val()!=""){
+						vhods.push($(item).val().replace(" ", "_"));
+					}
 				});
 
 
@@ -74,19 +79,21 @@
 
 				var vihods = new Array();
 				vihodsInput.each(function(i, item){
-					if($(item).val()!="")
-						vihods.push($(item).val());
+					if($(item).val()!=""){
+						vihods.push($(item).val().replace(" ", "_"));
+					}
 				});
 
-				var countvihods = new Array();
+				var countvihod = new Array();
 				for(var i = 0; i < vihods.length; i++){
-					countvihods.push(0);
+					countvihod.push(0);
 				}
 
 				var soses = new Array();
 				sosInput.each(function(i, item){
-					if($(item).val()!="")	
-						soses.push($(item).val());
+					if($(item).val()!=""){
+						soses.push($(item).val().replace(" ", "_"));
+					}
 				});
 
 				var countsos = new Array();
@@ -103,9 +110,20 @@
 					feminism(countsos, countsos.length - 1, soses);
 					sostoyaniya.push(varInput);
 					$('#head').append("<td>"+ varInput +"</td>");
+					$('#head2').append("<td>"+ varInput +"</td>");
 					varInput = "";
 					yoba++;
 				}
+				while(countvihod[0] <= vihods[0].length) {
+					var varInput="";
+					for (var k = 0; k < countvihod.length; k++)
+					{
+						varInput+=vihods[k][countvihod[k]];
+					}
+					feminism(countvihod, countvihod.length - 1, vihods);
+					vihodi.push(varInput);
+				}
+				
 
 				var countervhod = 0;
 				while(countvhod[0] <= vhods[0].length) {
@@ -116,8 +134,10 @@
 					}
 					feminism(countvhod, countvhod.length - 1, vhods);
 					$('#graphics').append("<tr id='trvhod"+countervhod+"'><td>"+ varInput +"</td></tr>");
+					$('#graphics2').append("<tr id='tr2vhod"+countervhod+"'><td>"+ varInput +"</td></tr>");
 					for (var i = sostoyaniya.length - 1; i >= 0; i--) {
 						$('#trvhod'+countervhod).append("<td>"+ sostoyaniya[Math.floor(Math.random()*100) % sostoyaniya.length] +"</td>");
+						$('#tr2vhod'+countervhod).append("<td>"+ vihodi[Math.floor(Math.random()*100) % vihodi.length] +"</td>");
 					}
 					varInput = "";
 					//yoba++;
