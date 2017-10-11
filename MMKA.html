@@ -5,6 +5,23 @@
 		<title>Конченые автоматы</title>
 	</head>
 	<body>
+		<style>
+			table {
+				margin-top: 20px;
+				margin-bottom: 20px;
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+			table > thead > tr > th,
+			table > thead > tr > td,
+			table > tbody > tr > th,
+			table > tbody > tr > td,
+			table > tfoot > tr > th,
+			table > tfoot > tr > td {
+			  padding: 8px;
+			  line-height: 1.5384615385;
+			}
+		</style>
 		<div id="vhodlist">
 			<p>Входы</p>
 			<button onclick="addVhod()">Добавить вход</button>
@@ -44,6 +61,11 @@
 				<th>Входы\Состояния</th>
 			</tr>
 		</table>
+		<table id="graphics5" border=1>
+			<tr id="head5">
+				<th>Состояния'\Состояния</th>
+			</tr>
+		</table>
 		<script>
 			var sostoyaniya = new Array();
 			var vihodi = new Array();
@@ -64,7 +86,7 @@
 					return count;
 				}
 			}
-			function generateValues() {//TODO: ну в принципе все.
+			function generateValues() {
 				var sosArray = new Object();
 				var vihArray = new Object();
 				var vihArrayMoore = new Object();
@@ -82,6 +104,9 @@
 
 				$($("#graphics4").find("tr")[0]).find("td").remove();
 				$("#graphics4").find("tr:not(#head4)").remove();
+
+				$($("#graphics5").find("tr")[0]).find("td").remove();
+				$("#graphics5").find("tr:not(#head5)").remove();
 				sostoyaniya = new Array();
 				vihodi = new Array();
 				var vhodsInput = $("#vhodlist").find("input");
@@ -150,6 +175,7 @@
 					$('#vihods').append("<td>" + vihodi[index] + "</td>");
 					vihArrayMoore[varInput] = vihodi[index];
 					$('#head4').append("<td>"+ varInput +"</td>");
+					$('#head5').append("<td>"+ varInput +"</td>");
 					varInput = "";
 					yoba++;
 				}
@@ -188,6 +214,21 @@
 					}
 					varInput = "";
 					countervhod++;
+				}
+
+				for (var i = 0; i < sostoyaniya.length; i++) {
+					$('#graphics5').append("<tr id='tr5vhod"+i+"'><td>"+ sostoyaniya[i] +"</td></tr>");
+					var cnt = 0;
+					for (sos in sosArray) {
+						$('#tr5vhod'+i).append("<td id='td5vhod"+sos+"'></td>");
+						result = "";
+						for(var j = 0; j < sostoyaniya.length; j++){
+							if(sosArray[sos][sostoyaniya[i]] == sostoyaniya[j]){
+								result += " " + sos+"/"+vihArray[sos][sostoyaniya[j]]
+							}
+						}
+						$('#td5vhod'+sos).append(result);
+					}
 				}
 
 			}
